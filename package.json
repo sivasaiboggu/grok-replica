@@ -1,0 +1,1 @@
+{"description":"Grok Replica — a study clone of a Grok-style chat app. Dark-first, minimal, fast. Chats run on the user's own free Gemini API key; nothing is faked.","license":"MIT","name":"grok-replica","scripts":{"shots":"node scripts/shots.mjs","start":"python3 -m http.server 8000","test":"node --test tests/*.test.js"},"type":"module","version":"1.0.0"}
