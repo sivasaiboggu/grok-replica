@@ -61,6 +61,17 @@ const SAMPLE_STATE = {
           error: null,
           ts: 1763856001000,
         },
+        { role: 'user', text: 'Show me a long line of code', usage: null, error: null, ts: 1763856002000 },
+        {
+          role: 'assistant',
+          // Fixture for the mobile code-block check: one unbroken line
+          // far wider than a phone. It must scroll inside its block,
+          // never push the column wider or slice at the screen edge.
+          text: 'Here is one long line:\n\n```js\nconst url = "https://api.example.com/v1/users/1234567890/profile?include=posts,comments,followers&token=abcdef0123456789";\n```\n\nThe line above is longer than the phone screen — it scrolls inside the block.',
+          usage: { prompt: 9, candidates: 61, total: 70 },
+          error: null,
+          ts: 1763856003000,
+        },
       ],
     },
   ],

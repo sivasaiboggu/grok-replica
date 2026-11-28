@@ -16,9 +16,9 @@ No build step. Open `index.html` in a browser, or serve the folder:
 npm start        # python3 -m http.server 8000, then open http://localhost:8000
 ```
 
-GitHub Pages-ready: the repo root is the site. No repo exists yet — create
-one named `grok-replica` and push, then enable Pages (Settings → Pages →
-Deploy from a branch → `main`, `/(root)`).
+GitHub Pages-ready: the repo root is the site. The code is pushed to
+`sivasaiboggu/grok-replica` on `main`; enable Pages (Settings → Pages →
+Deploy from a branch → `main`, `/(root)`) to put it live.
 
 ## First use (what Siva must supply)
 
@@ -74,12 +74,14 @@ That is the only thing needed. No account, no server, no payment.
 npm test
 ```
 
-**62 tests, 62 pass, 0 fail** — markdown (escaping, code blocks, lists,
+**64 tests, 64 pass, 0 fail** — markdown (escaping, code blocks, lists,
 links), store (CRUD, search, persistence round-trip, corrupt storage),
 Gemini client (SSE parsing incl. split chunks, error mapping for wrong
 key / missing model / rate limit, abort, no-key refusal), copy guard
 (no emoji, no banned marketing words, affiliation disclaimer present),
-layout guards (viewport, no 100vw, mobile breakpoint, all wired ids).
+layout guards (viewport, no 100vw, mobile breakpoint, all wired ids,
+chat column applied to #chatRoot, code blocks capped to the column with
+an internally scrolling pre).
 
 Two real bugs were found and fixed during verification:
 
@@ -131,18 +133,18 @@ only (titled "Sample chat"); the app itself contains no sample data.
   the same on purpose.
 - **Fonts come from Google Fonts** (Inter + JetBrains Mono). Offline they
   fall back to system fonts; everything still works.
-- **Not pushed to GitHub.** No `grok-replica` repo exists yet — Siva
-  creates it, then the snapshot push can run.
+- **Pushed to GitHub** (`sivasaiboggu/grok-replica`, `main`). Pages is not
+  enabled yet — Siva must enable it in Settings → Pages.
 
 ## Launch checklist
 
-- [x] Tests 62/62 green
+- [x] Tests 64/64 green
 - [x] Desktop 1280px + mobile 390px, zero overflow, eyeballed
 - [x] Dark + light, same quality
 - [x] Copy guard clean (no emoji, no clichés, disclaimer present)
 - [x] No dead buttons, no placeholder features
 - [ ] Siva adds his free Gemini key in Settings and sends one real message
-- [ ] Siva creates the `grok-replica` GitHub repo, then push + enable Pages
+- [ ] Siva enables Pages on the `grok-replica` repo
 - [ ] Siva tries it on his phone (390px) for real
 
 ## Risks
