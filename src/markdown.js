@@ -60,14 +60,6 @@ function restoreCodeBlocks(html, blocks) {
   return out;
 }
 
-export function codeBlockHtml(block) {
-  const label = block.lang ? escapeHtml(block.lang) : 'code';
-  return `<div class="code-block" data-code-block>` +
-    `<div class="code-block-head"><span>${label}</span>` +
-    `<button type="button" data-copy-code="${block.id}" aria-label="Copy code">Copy</button></div>` +
-    `<pre><code>${escapeHtml(block.code)}</code></pre></div>`;
-}
-
 export function getCodeBlockById(blocks, id) {
   return blocks.find((b) => String(b.id) === String(id)) || null;
 }

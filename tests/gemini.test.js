@@ -196,7 +196,8 @@ describe('formatUsage', () => {
 });
 
 describe('isValidModel', () => {
-  it('accepts the three shipped models only', () => {
+  it('accepts the shipped models only', () => {
+    assert.equal(isValidModel('gemini-3.8-flash'), true);
     assert.equal(isValidModel('gemini-2.5-flash'), true);
     assert.equal(isValidModel('gemini-2.0-flash'), true);
     assert.equal(isValidModel('gemini-2.5-pro'), true);

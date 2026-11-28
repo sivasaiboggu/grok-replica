@@ -45,7 +45,7 @@ const DEBUG_PORT = 9226;
 
 const SAMPLE_STATE = {
   version: 1,
-  settings: { apiKey: '', model: 'gemini-2.5-flash', theme: 'dark' },
+  settings: { apiKey: '', model: 'gemini-3.8-flash', theme: 'dark' },
   conversations: [
     {
       id: 'sample-chat',
@@ -166,7 +166,7 @@ async function main() {
       // seed or clear localStorage, then reload so the app reads it
       const seedState = shot.seed
         ? { ...SAMPLE_STATE, settings: { ...SAMPLE_STATE.settings, theme: shot.theme } }
-        : { version: 1, settings: { apiKey: '', model: 'gemini-2.5-flash', theme: shot.theme }, conversations: [], activeId: null };
+        : { version: 1, settings: { apiKey: '', model: 'gemini-3.8-flash', theme: shot.theme }, conversations: [], activeId: null };
       await cdp.evaluate(`localStorage.setItem('grok-replica:v1', ${JSON.stringify(JSON.stringify(seedState))})`);
       const stored = await cdp.evaluate(`localStorage.getItem('grok-replica:v1') !== null`);
       if (!stored) throw new Error('localStorage seeding failed on file:// — cannot render this shot');

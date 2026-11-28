@@ -146,6 +146,11 @@ describe('persistence', () => {
     assert.equal(loaded.settings.model, DEFAULT_MODEL);
   });
 
+  it('defaults to the latest Flash model', () => {
+    assert.equal(DEFAULT_MODEL, 'gemini-3.8-flash');
+    assert.equal(emptyState().settings.model, DEFAULT_MODEL);
+  });
+
   it('clears storage and returns a fresh state', () => {
     const storage = memoryStorage();
     const state = emptyState();

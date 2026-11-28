@@ -42,7 +42,8 @@ That is the only thing needed. No account, no server, no payment.
 - **Sidebar history**: new chat, rename (inline), delete (two-step
   confirm), search across titles and message text. Everything persists
   in localStorage.
-- **Model picker**: Gemini 2.5 Flash (default), Gemini 2.0 Flash,
+- **Model picker**: Gemini 3.8 Flash (default, Google's latest Flash —
+  released 2 Sep 2026), Gemini 2.5 Flash, Gemini 2.0 Flash,
   Gemini 2.5 Pro. If a model is unavailable for your key, or the key is
   wrong, or quota is hit, the app shows Google's real error in plain
   words — it never invents an answer.
@@ -74,14 +75,15 @@ That is the only thing needed. No account, no server, no payment.
 npm test
 ```
 
-**64 tests, 64 pass, 0 fail** — markdown (escaping, code blocks, lists,
-links), store (CRUD, search, persistence round-trip, corrupt storage),
-Gemini client (SSE parsing incl. split chunks, error mapping for wrong
-key / missing model / rate limit, abort, no-key refusal), copy guard
-(no emoji, no banned marketing words, affiliation disclaimer present),
-layout guards (viewport, no 100vw, mobile breakpoint, all wired ids,
-chat column applied to #chatRoot, code blocks capped to the column with
-an internally scrolling pre).
+**67 tests, 67 pass, 0 fail** — markdown (escaping, code blocks, lists,
+links), store (CRUD, search, persistence round-trip, corrupt storage,
+default model), Gemini client (SSE parsing incl. split chunks, error mapping
+for wrong key / missing model / rate limit, abort, no-key refusal, model
+list), copy guard (no emoji, no banned marketing words, affiliation
+disclaimer present), layout guards (viewport, no 100vw, mobile breakpoint,
+all wired ids, chat column applied to #chatRoot, code blocks capped to the
+column with an internally scrolling pre, both model pickers list only real
+models with the default first, Share button says what it copies).
 
 Two real bugs were found and fixed during verification:
 
@@ -121,10 +123,10 @@ only (titled "Sample chat"); the app itself contains no sample data.
   chat — by design. It never shows a canned "demo" answer as if it were
   real.
 - **Model names were verified against Google's documented v1beta API**
-  (`gemini-2.5-flash`, `gemini-2.0-flash`, `gemini-2.5-pro`), but live
-  availability depends on your key and quota. A 404 surfaces as a plain
-  "try another model" message. No live call was made from this machine
-  (no key exists here).
+  (`gemini-3.8-flash`, `gemini-2.5-flash`, `gemini-2.0-flash`,
+  `gemini-2.5-pro`), but live availability depends on your key and quota.
+  A 404 surfaces as a plain "try another model" message. No live call was
+  made from this machine (no key exists here).
 - **The key lives in the browser.** It is sent to Google's API with each
   request (that is how client-side Gemini apps work). Do not paste a key
   you use for anything else; a free AI Studio key is the right one.

@@ -7,6 +7,7 @@ import { describe, it } from 'node:test';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { MODELS } from '../src/gemini.js';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url)) + '/..';
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
@@ -76,7 +77,7 @@ describe('layout guards', () => {
     const ids = [
       'sidebar', 'scrim', 'menuBtn', 'closeSidebarBtn', 'wordmark',
       'newChatBtn', 'searchInput', 'chatList', 'settingsBtn', 'themeBtn',
-      'themeBtnLabel', 'keyState', 'modelSelect', 'copyLinkBtn',
+      'themeBtnLabel', 'keyState', 'modelSelect', 'copyChatBtn',
       'chatScroll', 'chatRoot', 'composerInput', 'sendBtn', 'stopBtn',
       'settingsModal', 'apiKeyInput', 'toggleKeyVisibility',
       'settingsModelSelect', 'saveSettingsBtn', 'clearDataBtn', 'toast',
@@ -94,5 +95,29 @@ describe('layout guards', () => {
   it('has no external script dependency besides fonts', () => {
     const scripts = [...html.matchAll(/<script[^>]*src="([^"]+)"/g)].map((m) => m[1]);
     assert.deepEqual(scripts, ['src/app.js']);
+  });
+
+  it('offers only real models in both pickers, with the default first', () => {
+    // The topbar picker and the Settings picker must list exactly the
+    // models the client accepts, or a saved model would have no option
+    // and the select would silently show the wrong one.
+    const valid = new Set(MODELS.map((m) => m.id));
+    for (const selectId of ['modelSelect', 'settingsModelSelect']) {
+      const select = html.match(new RegExp(`<select[^>]*id="${selectId}"[^>]*>([\\s\\S]*?)</select>`))?.[1];
+      assert.ok(select, `missing select #${selectId}`);
+      const values = [...select.matchAll(/<option value="([^"]+)"/g)].map((m) => m[1]);
+      assert.ok(values.length > 0, `no options in #${selectId}`);
+      for (const v of values) assert.ok(valid.has(v), `unknown model in #${selectId}: ${v}`);
+      assert.equal(values[0], MODELS[0].id, `default model is not first in #${selectId}`);
+    }
+  });
+
+  it('does not promise the Share button copies a link', () => {
+    // Share copies the chat as Markdown (there is no shareable link —
+    // chats live in this browser only), so its title must say so.
+    const btn = html.match(/<button[^>]*id="copyChatBtn"[^>]*>/)[0];
+    const title = btn.match(/title="([^"]*)"/)?.[1] ?? '';
+    assert.ok(!/link/i.test(title), 'Share button still promises a link');
+    assert.ok(/Markdown/.test(title), 'Share button does not say what it copies');
   });
 });

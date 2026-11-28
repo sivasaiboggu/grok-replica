@@ -27,7 +27,7 @@ const els = {
   themeBtnLabel: $('#themeBtnLabel'),
   keyState: $('#keyState'),
   modelSelect: $('#modelSelect'),
-  copyLinkBtn: $('#copyLinkBtn'),
+  copyChatBtn: $('#copyChatBtn'),
   chatScroll: $('#chatScroll'),
   chatRoot: $('#chatRoot'),
   composerInput: $('#composerInput'),
@@ -653,7 +653,7 @@ els.modelSelect.addEventListener('change', () => {
 els.settingsModelSelect.addEventListener('change', () => {
   els.modelSelect.value = els.settingsModelSelect.value;
 });
-els.copyLinkBtn.addEventListener('click', async () => {
+els.copyChatBtn.addEventListener('click', async () => {
   const conv = getActive(state);
   if (!conv || conv.messages.length === 0) {
     showToast('Nothing to copy yet');
@@ -686,8 +686,9 @@ els.chatRoot.addEventListener('click', async (ev) => {
   const block = getCodeBlockById(blocks, btn.dataset.copyCode);
   if (!block) return;
   await copyText(block.code);
+  const original = btn.innerHTML;
   btn.textContent = 'Copied';
-  setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  setTimeout(() => { btn.innerHTML = original; }, 1500);
 });
 
 document.addEventListener('keydown', (ev) => {
